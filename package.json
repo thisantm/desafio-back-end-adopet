@@ -2,7 +2,7 @@
   "name": "desafio-back-end-adopet",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./api/index.js",
   "scripts": {
     "start": "nodemon ./api/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,9 +12,13 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.20.2",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "mysql2": "^3.2.0",
+    "path": "^0.12.7",
+    "sequelize": "^6.30.0",
+    "sequelize-cli": "^6.6.0"
   },
   "devDependencies": {
-    "mongoose": "^7.0.3"
+    "nodemon": "^2.0.22"
   }
 }
