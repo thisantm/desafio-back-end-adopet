@@ -17,7 +17,15 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Shelter.init({
-    name: DataTypes.STRING,
+    name: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: "nome não pode estar vazio"
+        }
+      }
+    },
     email: {
       type: DataTypes.STRING,
       validate: {
