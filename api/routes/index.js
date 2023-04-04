@@ -1,7 +1,7 @@
 const bodyParser = require('body-parser');
-const tutores = require('./tutoresRoute');
+const tutors = require('./tutorsRoute');
 
 module.exports = app => {
     app.use(bodyParser.json(),
-            tutores)
+            tutors)
 }

@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Tutores extends Model {
+  class Shelter extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,18 +11,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Shelter.hasMany(models.Pet, {
+        foreignKey: "shelter_id"
+      })
     }
   }
-  Tutores.init({
-    nome: {
-      type: DataTypes.STRING,
-      validate: {
-        notEmpty: {
-          args: true,
-          msg : "Nome não pode estar vazio"
-        }
-      }
-    },
+  Shelter.init({
+    name: DataTypes.STRING,
     email: {
       type: DataTypes.STRING,
       validate: {
@@ -32,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    senha: {
+    password: {
       type: DataTypes.STRING,
       validate: {
         notEmpty: {
@@ -43,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
     },
   }, {
     sequelize,
-    modelName: 'Tutores',
+    modelName: 'Shelter',
   });
-  return Tutores;
+  return Shelter;
 };
