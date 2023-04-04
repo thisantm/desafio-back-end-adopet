@@ -1,9 +1,10 @@
-const database = require("../models");
+const {TutorsServices} = require('../services');
+const tutorServices = new TutorsServices();
 
 class TutorsController{
     static async findAllTutors(req, res){
         try{
-            const tutors = await database.Tutor.findAll();
+            const tutors = await tutorServices.findAll();
             if(tutors.length === 0) return res.status(200).json({msg : "Não encontrado."});
             return res.status(200).json(tutors);
         } catch(error){
@@ -14,7 +15,7 @@ class TutorsController{
     static async findTutorById(req,res){
         const {id} = req.params;
         try{
-            const tutor = await database.Tutor.findOne({where: {id: Number(id)}});
+            const tutor = await tutorServices.findOne({id: Number(id)});
             if(tutor === null) return res.status(200).json({msg : "Não encontrado."});
             return res.status(200).json(tutor);
         } catch(error){
@@ -26,9 +27,10 @@ class TutorsController{
         const tutor = req.body;
         if(tutor.password !== tutor.confirmPassword) return res.status(200).json({msg : "senhas diferentes"});
         try{
-            const tutorCriado = await database.Tutor.create(tutor);
-            return res.status(200).json(tutorCriado);
+            const tutorCreated = await tutorServices.create(tutor);
+            return res.status(200).json(tutorCreated);
         } catch(error){
+            if(error.name == 'SequelizeUniqueConstraintError') return res.status(500).json({msg: "email já utilizado"});
             return res.status(500).json(error.message);
         }
     }
@@ -38,9 +40,9 @@ class TutorsController{
         const id = req.body.id;
         if(newInfo.password !== null && newInfo.password !== newInfo.confirmPassword) return res.status(200).json({msg : "senhas diferentes"});
         try{
-            await database.Tutor.update(newInfo, {where: {id: Number(id)}});
-            const tutorAtualizado = await database.Tutor.findOne({where: {id: Number(id)}});
-            return res.status(200).json(tutorAtualizado);
+            await tutorServices.update(newInfo, {id: Number(id)});
+            const tutorUpdated = await tutorServices.findOne({id: Number(id)});
+            return res.status(200).json(tutorUpdated);
         } catch(error){
             return res.status(500).json(error.message);
         }
@@ -49,9 +51,9 @@ class TutorsController{
     static async deleteTutor(req,res){
         const {id} = req.params;
         try{
-            const tutorExists = await database.Tutor.findOne({where: {id: Number(id)}});
+            const tutorExists = await tutorServices.findOne({id: Number(id)});
             if(tutorExists === null) return res.status(200).json({msg : "id não existente"});
-            await database.Tutor.destroy({where: {id: Number(id)}});
+            await tutorServices.destroy({id: Number(id)});
             return res.status(200).json({msg: `id ${id} deletado com sucesso`});
         } catch(error){
             return res.status(500).json(error.message);
