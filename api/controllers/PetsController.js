@@ -1,5 +1,6 @@
 const {PetsServices} = require('../services');
 const petServices = new PetsServices();
+const { Image } = require('canvas') // necessary for image on node;
 
 class PetsController{
     static async findAllPets(req, res){ // finds all pets, doesnt show adopted pets because of defaultScope
@@ -26,6 +27,15 @@ class PetsController{
     static async createPet(req, res){ // creates a pet, it has to be connected to a shelter
         const {shelterId} = req.params;
         const petInfo = req.body;
+
+        const checkImage = new Image();  // https://www.zhenghao.io/posts/verify-image-url
+        checkImage.src = petInfo.image;
+        const validateImage = await new Promise((resolve) => { // validate the url is an image
+            checkImage.onload = () => resolve(true);
+            checkImage.onerror = () => resolve(false);
+        });
+        if(!validateImage) return res.status(200).json({msg: "url não é uma imagem"}); // if url is not an image send message "url is not an image"
+
         try{
             const petCreated = await petServices.create({shelter_id: Number(shelterId), ...petInfo});
             return res.status(200).json(petCreated);
@@ -38,6 +48,15 @@ class PetsController{
         const newInfo = req.body;
         const id = req.body.id;
         delete req.body.adopted;
+
+        const checkImage = new Image(); // https://www.zhenghao.io/posts/verify-image-url
+        checkImage.src = newInfo.image;
+        const validateImage = await new Promise((resolve) => { // validate the url is an image
+            checkImage.onload = () => resolve(true);
+            checkImage.onerror = () => resolve(false);
+        });
+        if(!validateImage) return res.status(200).json({msg: "url não é uma imagem"}); // if url is not an image send message "url is not an image"
+
         try{
             await petServices.update(newInfo, {id: Number(id)});
             const petUpdated = await petServices.findOneFullScope({id: Number(id)});
