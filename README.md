@@ -1,4 +1,4 @@
-# desafio-back-end-adopet
+# Back-End Challenge Adopet
 ## Objective
 API for a plataform to connect Shelters/NGOs to people who want to adopt pets
 
