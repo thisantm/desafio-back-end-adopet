@@ -30,7 +30,6 @@ class PetsController{
             const petCreated = await petServices.create({shelter_id: Number(shelterId), ...petInfo});
             return res.status(200).json(petCreated);
         } catch(error){
-            if(error.name == 'SequelizeUniqueConstraintError') return res.status(500).json({msg: "email já utilizado"});
             return res.status(500).json(error.message);
         }
     }

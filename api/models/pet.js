@@ -74,6 +74,11 @@ module.exports = (sequelize, DataTypes) => {
       where: {
         adopted: false
       }
+    },
+    scopes: {
+      includeAll: {
+        where: {}
+      }
     }
   });
   return Pet;

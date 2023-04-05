@@ -1,26 +1,25 @@
-const {PetsServices} = require('../services');
-const petServices = new PetsServices();
+const {AdoptionsServices} = require('../services');
+const adoptionServices = new AdoptionsServices();
 
-class PetsController{
+class AdoptionsController{
 
-    static async createPet(req, res){
-        const {shelterId} = req.params;
-        const petInfo = req.body;
+    static async createAdoption(req, res){
+        const {shelterId, petId} = req.params;
+        const adoptionInfo = req.body;
         try{
-            const petCreated = await petServices.create({shelter_id: Number(shelterId), ...petInfo});
-            return res.status(200).json(petCreated);
+            const adoptionCreated = await adoptionServices.create({pet_id: Number(petId), ...adoptionInfo}, shelterId);
+            return res.status(200).json(adoptionCreated);
         } catch(error){
-            if(error.name == 'SequelizeUniqueConstraintError') return res.status(500).json({msg: "email já utilizado"});
             return res.status(500).json(error.message);
         }
     }
 
-    static async deletePet(req,res){
-        const {id} = req.params;
+    static async deleteAdoption(req,res){
+        const {shelterId, id} = req.params;
         try{
-            const petExists = await petServices.findOne({id: Number(id)});
-            if(petExists === null) return res.status(200).json({msg : "id não existente"});
-            await petServices.destroy({id: Number(id)});
+            const adoptionExists = await adoptionServices.findOne({id: Number(id)});
+            if(adoptionExists === null) return res.status(200).json({msg : "id não existente"});
+            await adoptionServices.destroy(adoptionExists, shelterId);
             return res.status(200).json({msg: `id ${id} deletado com sucesso`});
         } catch(error){
             return res.status(500).json(error.message);
@@ -28,4 +27,4 @@ class PetsController{
     }
 }
 
-module.exports = PetsController; 
+module.exports = AdoptionsController; 

@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const SheltersController = require('../controllers/SheltersController.js');
 const PetsController = require('../controllers/PetsController.js');
+const AdoptionsController = require('../controllers/AdoptionsController.js');
 
 const router = Router();
 
@@ -24,5 +25,10 @@ router.put("/abrigos/:shelterId/pets/", PetsController.updatePet);
 router.patch("/abrigos/:shelterId/pets/", PetsController.updatePet);
 
 router.delete("/abrigos/:shelterId/pets/:petId", PetsController.deletePet);
+
+//adoption
+router.post("/abrigos/:shelterId/pets/:petId/adocao", AdoptionsController.createAdoption);
+
+router.delete("/abrigos/:shelterId/adocao/:id", AdoptionsController.deleteAdoption);
 
 module.exports = router;

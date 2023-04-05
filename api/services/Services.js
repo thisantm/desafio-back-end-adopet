@@ -14,16 +14,16 @@ class Services{
         return database[this.modelName].findOne({where: {...where}});
     }
 
-    async create(data){
-        return database[this.modelName].create(data);
+    async create(data, transaction = {}){
+        return database[this.modelName].create(data, transaction);
     }
 
     async update(data, where, transaction = {}){
         return database[this.modelName].update(data, {where: {...where}}, transaction);
     }
 
-    async destroy(where){
-        return database[this.modelName].destroy({where: {...where}});
+    async destroy(where, transaction = {}){
+        return database[this.modelName].destroy({where: {...where}}, transaction);
     }
 }
 
