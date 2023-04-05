@@ -5,7 +5,7 @@ class TutorsController{
     static async findAllTutors(req, res){ // finds all tutors, doesnt show password because of defaultScope
         try{
             const tutors = await tutorServices.findAll();
-            if(tutors.length === 0) return res.status(200).json({msg : "Não encontrado."}); // if no shelter is found return a message "not found"
+            if(tutors.length === 0) return res.status(200).json({msg : "Não encontrado."}); // if no tutor is found return a message "not found"
             return res.status(200).json(tutors);
         } catch(error){
             return res.status(500).json(error.message);
@@ -16,7 +16,7 @@ class TutorsController{
         const {id} = req.params;
         try{
             const tutor = await tutorServices.findOne({id: Number(id)});
-            if(tutor === null) return res.status(200).json({msg : "Não encontrado."}); // if the shelter is not found return a message "not found"
+            if(tutor === null) return res.status(200).json({msg : "Não encontrado."}); // if the tutor is not found return a message "not found"
             return res.status(200).json(tutor);
         } catch(error){
             return res.status(500).json(error.message);
