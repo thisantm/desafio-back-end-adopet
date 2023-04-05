@@ -10,8 +10,12 @@ class PetsServices extends Services{
         return database[this.modelName].scope("includeAll").findOne({where: {...where}, include: [{model: database.Adoption}]});
     }
 
-    async updateFullScope(data, where = {}, transaction = {}){
+    async update(data, where = {}, transaction = {}){ // the reason this exists is because without the scope and if the pet is adopted the controller will send a positive despite the pet not being updated in the database
         return database[this.modelName].scope("includeAll").update(data, {where: {...where}}, transaction);
+    }
+
+    async destroy(where = {}, transaction = {}){ // the reason this exists is because without the scope and if the pet is adopted the controller will send a positive despite the pet not being deleted from the database
+        return database[this.modelName].scope("includeAll").destroy({where: {...where}}, transaction);
     }
 }
 

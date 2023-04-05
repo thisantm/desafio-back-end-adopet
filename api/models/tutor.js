@@ -45,7 +45,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     telephone: {
       type: DataTypes.STRING,
-      is: "^\+(?:[0-9]●?){6,14}[0-9]$/"
+      is: "^\+(?:[0-9]●?){6,14}[0-9]$/" // Valid internacional phone number
     },
     city: DataTypes.STRING,
     aboutMe: {
@@ -55,13 +55,13 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Tutor',
-    defaultScope: {
+    defaultScope: { // impedes password from being shown
       attributes: {
         exclude: ["password"]
       }
     },
     scopes: {
-      comSenha: {
+      withPassword: { // allows password to be shown
         attributes: {
           include: ["password"]
         }

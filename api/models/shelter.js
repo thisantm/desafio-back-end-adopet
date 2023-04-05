@@ -47,6 +47,18 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Shelter',
+    defaultScope: { // impedes password from being shown
+      attributes: {
+        exclude: ["password"]
+      }
+    },
+    scopes: {
+      withPassword: { // allows password to be shown
+        attributes: {
+          include: ["password"]
+        }
+      }
+    }
   });
   return Shelter;
 };
