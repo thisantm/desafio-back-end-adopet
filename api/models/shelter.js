@@ -1,7 +1,7 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Shelter extends Model {
     /**
@@ -12,8 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Shelter.hasMany(models.Pet, {
-        foreignKey: "shelter_id"
-      })
+        foreignKey: 'shelter_id',
+      });
     }
   }
   Shelter.init({
@@ -22,43 +22,43 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           args: true,
-          msg: "nome não pode estar vazio"
-        }
-      }
+          msg: 'nome não pode estar vazio',
+        },
+      },
     },
     email: {
       type: DataTypes.STRING,
       validate: {
         isEmail: {
           args: true,
-          msg : "Formato de e-mail invalido"
-        }
-      }
+          msg: 'Formato de e-mail invalido',
+        },
+      },
     },
     password: {
       type: DataTypes.STRING,
       validate: {
         notEmpty: {
           args: true,
-          msg : "Senha não pode estar vazia"
-        }
-      }
+          msg: 'Senha não pode estar vazia',
+        },
+      },
     },
   }, {
     sequelize,
     modelName: 'Shelter',
     defaultScope: { // impedes password from being shown
       attributes: {
-        exclude: ["password"]
-      }
+        exclude: ['password'],
+      },
     },
     scopes: {
       withPassword: { // allows password to be shown
         attributes: {
-          include: ["password"]
-        }
-      }
-    }
+          include: ['password'],
+        },
+      },
+    },
   });
   return Shelter;
 };

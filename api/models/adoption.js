@@ -1,7 +1,7 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Adoption extends Model {
     /**
@@ -12,11 +12,11 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Adoption.belongsTo(models.Tutor, {
-        foreignKey: "tutor_id"
-      })
+        foreignKey: 'tutor_id',
+      });
       Adoption.belongsTo(models.Pet, {
-        foreignKey: "pet_id"
-      })
+        foreignKey: 'pet_id',
+      });
     }
   }
   Adoption.init({
@@ -25,9 +25,9 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'Adoption',
     defaultScope: {
       attributes: {
-        exclude: ["updatedAt"]
-      }
-    }
+        exclude: ['updatedAt'],
+      },
+    },
   });
   return Adoption;
 };

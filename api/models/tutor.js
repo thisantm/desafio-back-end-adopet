@@ -1,7 +1,7 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Tutor extends Model {
     /**
@@ -12,8 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Tutor.hasMany(models.Adoption, {
-        foreignKey: "tutor_id"
-      })
+        foreignKey: 'tutor_id',
+      });
     }
   }
   Tutor.init({
@@ -21,52 +21,52 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       is: {
         // args: "[^0-9].*/",
-        args: "^[a-zA-ZÀ-Ùà-ù'].+(?:[a-zA-ZÀ-Ùà-ù']+)+$/",
-        msg: "nome pode conter apenas caracteres validos"
-      }
+        args: "^[a-zA-ZÀ-Ùà-ù'].+(?:[a-zA-ZÀ-Ùà-ù']+)+$",
+        msg: 'nome pode conter apenas caracteres validos',
+      },
     },
     email: {
       type: DataTypes.STRING,
       validate: {
         isEmail: {
           args: true,
-          msg : "Formato de e-mail invalido"
-        }
-      }
+          msg: 'Formato de e-mail invalido',
+        },
+      },
     },
     password: {
       type: DataTypes.STRING,
       validate: {
         notEmpty: {
           args: true,
-          msg : "Senha não pode estar vazia"
-        }
-      }
+          msg: 'Senha não pode estar vazia',
+        },
+      },
     },
     telephone: {
       type: DataTypes.STRING,
-      is: "^\+(?:[0-9]●?){6,14}[0-9]$/" // Valid internacional phone number
+      is: '^\+(?:[0-9]●?){6,14}[0-9]$/', // Valid internacional phone number
     },
     city: DataTypes.STRING,
     aboutMe: {
       type: DataTypes.STRING,
-      len: [1, 200]
-    }
+      len: [1, 200],
+    },
   }, {
     sequelize,
     modelName: 'Tutor',
     defaultScope: { // impedes password from being shown
       attributes: {
-        exclude: ["password"]
-      }
+        exclude: ['password'],
+      },
     },
     scopes: {
       withPassword: { // allows password to be shown
         attributes: {
-          include: ["password"]
-        }
-      }
-    }
+          include: ['password'],
+        },
+      },
+    },
   });
   return Tutor;
 };

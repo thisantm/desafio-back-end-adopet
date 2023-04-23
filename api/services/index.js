@@ -4,8 +4,8 @@ const PetsServices = require('./PetsServices');
 const AdoptionsServices = require('./AdoptionsServices');
 
 module.exports = {
-    TutorsServices: TutorsServices,
-    SheltersServices: SheltersServices,
-    PetsServices: PetsServices,
-    AdoptionsServices: AdoptionsServices
-}
+  TutorsServices,
+  SheltersServices,
+  PetsServices,
+  AdoptionsServices,
+};
