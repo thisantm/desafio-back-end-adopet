@@ -1,8 +1,6 @@
 
 # Back-End Challenge Adopet
 
-Rápida descrição do objetivo de fazer esse projeto
-
 | :placard: Vitrine.Dev |     |
 | -------------  | --- |
 | :sparkles: Nome        | Back-End Challenge Adopet
